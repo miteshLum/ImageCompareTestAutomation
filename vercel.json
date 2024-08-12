@@ -1,14 +1,8 @@
 {
-  "version": 2,
-  "builds": [
+  "rewrites": [
     {
-      "src": "/server/api/index.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "/client/dist/*",
-      "use": "@now/static"
+      "source": "/imagecompare:match(.*)",
+      "destination": "https://image-compare-test-automation.vercel.app:match(.*)"
     }
-  ],
-  "routes": [{ "src": "/api/server/(.*)", "dest": "/api/server/$1" }]
+  ]
 }
