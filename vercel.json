@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/imagecompare:match(.*)",
+      "source": "/imagecompare/:match(.*)",
       "destination": "https://image-compare-automation-client.vercel.app:match(.*)"
     },
     {
