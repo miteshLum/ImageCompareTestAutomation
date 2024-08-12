@@ -2,7 +2,15 @@
   "rewrites": [
     {
       "source": "/imagecompare:match(.*)",
-      "destination": "https://image-compare-test-automation.vercel.app:match(.*)"
+      "destination": "https://image-compare-automation-client.vercel.app:match(.*)"
+    },
+    {
+      "source": "/img-compare/:match(.*)",
+      "destination": "https://image-compare-automation-server.vercel.app:match(.*)"
+    },
+    {
+      "source": "/node-api/:match(.*)",
+      "destination": ""
     }
   ]
 }
