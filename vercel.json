@@ -1,15 +1,14 @@
 {
-  "projects": {
-    "client": {
-      "root": "client",
-      "outputDirectory": "dist",
-      "buildCommand": "npm run build"
+  "version": 1,
+  "builds": [
+    {
+      "src": "/server/api/index.js",
+      "use": "@vercel/node"
     },
-    "server": {
-      "root": "server",
-      "outputDirectory": "api/server",
-      "buildCommand": "npm run build"
+    {
+      "src": "/client/dist/*",
+      "use": "@now/static"
     }
-  },
+  ],
   "routes": [{ "src": "/api/server/(.*)", "dest": "/api/server/$1" }]
 }
