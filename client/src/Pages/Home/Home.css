@@ -1,0 +1,19 @@
+.modules-container {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 50px;
+}
+.loader-style {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+.downloadExcelStyle {
+  color: #0000ee;
+  text-decoration: underline;
+  margin-left: 20px;
+  cursor: pointer;
+}

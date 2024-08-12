@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "client": {
+      "root": "client",
+      "outputDirectory": "dist",
+      "buildCommand": "npm run build"
+    },
+    "server": {
+      "root": "server",
+      "outputDirectory": "api/server",
+      "buildCommand": "npm run build"
+    }
+  },
+  "routes": [{ "src": "/api/server/(.*)", "dest": "/api/server/$1" }]
+}

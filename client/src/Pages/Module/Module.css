@@ -1,0 +1,35 @@
+.modules-container {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 50px;
+}
+.container-image-view {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}
+.filename-style {
+  font-size: 12px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.main-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* margin-top: 15px; */
+}
+.manage-image-style {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.scenario-name-label {
+  margin-left: 30px;
+  font-size: 13px;
+}
