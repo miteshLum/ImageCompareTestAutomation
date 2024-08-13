@@ -1,21 +1,9 @@
 const express = require("express");
-const app = express();
-const cors = require("cors");
 const axios = require("axios");
-const bodyParser = require("body-parser");
-
-app.use(express.static("public"));
-app.use(cors());
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
-app.get("/", function (req, res) {
-  res.send({ data: "abc" });
-});
+const router = express.Router();
 var csvWriterValueArray = [];
-app.post("/allmodules", async function (req, res) {
+
+router.post("/allmodules", async (req, res, next) => {
   let link = req.body.link;
   const suiteURL = `${link}/data/suites.json`;
   const moduleData = await axios.get(suiteURL).then(async (response) => {
@@ -25,7 +13,7 @@ app.post("/allmodules", async function (req, res) {
   res.send(moduleData);
 });
 
-app.post("/readAllScenarios", async function (req, res) {
+router.post("/readAllScenarios", async (req, res, next) => {
   let link = req.body.link;
   let uid = req.body.uid;
   csvWriterValueArray = [];
@@ -142,6 +130,6 @@ function removeLastStringfromScreenshotFile(str, typeOffolder) {
   return trimmed;
 }
 
-app.listen(5000, () => console.log("Server ready on port 5000."));
+// app.listen(5000, () => console.log("Server ready on port 5000."));
 
-module.exports = app;
+module.exports = router;

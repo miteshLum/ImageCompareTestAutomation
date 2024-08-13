@@ -1,21 +1,20 @@
 const dotenv = require("dotenv");
 dotenv.config();
 const express = require("express");
+const router = express.Router();
 const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectId;
 const _ = require("lodash");
-const app = express();
-const port = 3000;
 
 const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-const bodyParser = require("body-parser");
-app.use(bodyParser.json());
+// const bodyParser = require("body-parser");
+// app.use(bodyParser.json());
 
-app.get("/api/joblist", async (req, res) => {
+router.get("/joblist", async (req, res, next) => {
   try {
     await client.connect();
     const db = client.db();
@@ -30,8 +29,8 @@ app.get("/api/joblist", async (req, res) => {
   }
 });
 
-app.post(
-  "/api/createjob",
+router.post(
+  "/createjob",
   async (req, res, next) => {
     const headerText = req.get("execution-code");
     if (headerText === process.env.execCode) {
@@ -120,9 +119,7 @@ app.post(
       await client.connect();
       const db = client.db();
       const moduleCollection = db.collection("modulelist");
-      const totalModules = await moduleCollection
-        .find({ project: projectName })
-        .toArray();
+      const totalModules = await moduleCollection.find({ project: projectName }).toArray();
       const modulesPresent = totalModules[0].module_details.split(",");
       const scheduledModule = modulesScheduled.split(",");
       const addedModules = _.difference(scheduledModule, modulesPresent);
@@ -144,8 +141,8 @@ app.post(
   }
 );
 
-app.put(
-  "/api/updateCookie",
+router.put(
+  "/updateCookie",
   async (req, res, next) => {
     const headerText = req.get("execution-code");
     if (headerText === process.env.adminCode) {
@@ -162,10 +159,7 @@ app.put(
       await client.connect();
       const db = client.db();
       const cookiesCollection = db.collection("cookielist");
-      const updateRes = await cookiesCollection.updateOne(
-        { project: cookieType },
-        { $set: { value: cookieDetail } }
-      );
+      const updateRes = await cookiesCollection.updateOne({ project: cookieType }, { $set: { value: cookieDetail } });
       res.json(updateRes);
     } catch (err) {
       console.error(err);
@@ -176,17 +170,13 @@ app.put(
   }
 );
 
-app.get("/api/joblist/:triggerby", async (req, res) => {
+router.get("/joblist/:triggerby", async (req, res, next) => {
   const triggerby = req.params.triggerby;
   try {
     await client.connect();
     const db = client.db();
     const myCollection = db.collection("joblist");
-    const docs = await myCollection
-      .find({ triggerby: triggerby })
-      .sort({ createdDate: -1 })
-      .limit(10)
-      .toArray();
+    const docs = await myCollection.find({ triggerby: triggerby }).sort({ createdDate: -1 }).limit(10).toArray();
     res.json(docs);
   } catch (err) {
     console.error(err);
@@ -196,7 +186,7 @@ app.get("/api/joblist/:triggerby", async (req, res) => {
   }
 });
 
-app.get("/api/joblist/id/:id", async (req, res) => {
+router.get("/joblist/id/:id", async (req, res, next) => {
   const id = req.params.id;
   try {
     await client.connect();
@@ -216,7 +206,7 @@ app.get("/api/joblist/id/:id", async (req, res) => {
   }
 });
 
-app.get("/api/mcstatus/:mcname", async (req, res) => {
+router.get("/mcstatus/:mcname", async (req, res, next) => {
   const mcname = req.params.mcname;
   try {
     await client.connect();
@@ -232,7 +222,7 @@ app.get("/api/mcstatus/:mcname", async (req, res) => {
   }
 });
 
-app.get("/api/mcstatus", async (req, res) => {
+router.get("/mcstatus", async (req, res, next) => {
   try {
     await client.connect();
     const db = client.db();
@@ -247,7 +237,7 @@ app.get("/api/mcstatus", async (req, res) => {
   }
 });
 
-app.get("/api/:project/modulelist", async (req, res) => {
+router.get("/:project/modulelist", async (req, res, next) => {
   const project = req.params.project;
   try {
     await client.connect();
@@ -263,8 +253,8 @@ app.get("/api/:project/modulelist", async (req, res) => {
   }
 });
 
-app.put(
-  "/api/:project/addmodule",
+router.put(
+  "/:project/addmodule",
   async (req, res, next) => {
     const headerText = req.get("execution-code");
     if (headerText === process.env.adminCode) {
@@ -280,17 +270,12 @@ app.put(
       await client.connect();
       const db = client.db();
       const myCollection = db.collection("modulelist");
-      const modulesPresentAll = await myCollection
-        .find({ project: projectName })
-        .toArray();
+      const modulesPresentAll = await myCollection.find({ project: projectName }).toArray();
       const modulesPresent = modulesPresentAll[0].module_details.split(",");
       const addedModules = _.difference(newModules, modulesPresent);
       const updatedModules = _.concat(modulesPresent, addedModules);
       const newModulesList = updatedModules.join(",");
-      const updateRes = await myCollection.updateOne(
-        { project: projectName },
-        { $set: { module_details: newModulesList } }
-      );
+      const updateRes = await myCollection.updateOne({ project: projectName }, { $set: { module_details: newModulesList } });
       res.json(updateRes);
     } catch (err) {
       console.error(err);
@@ -301,7 +286,7 @@ app.put(
   }
 );
 
-app.get("/api/currentstatus", async (req, res) => {
+router.get("/currentstatus", async (req, res, next) => {
   try {
     await client.connect();
     const db = client.db();
@@ -317,8 +302,8 @@ app.get("/api/currentstatus", async (req, res) => {
   }
 });
 
-app.delete(
-  "/api/delete/modulelist",
+router.delete(
+  "/delete/modulelist",
   async (req, res, next) => {
     const headerText = req.get("execution-code");
     console.log(req.get("execution-code"));
@@ -349,6 +334,4 @@ app.delete(
   }
 );
 
-app.listen(port, () => {
-  console.log(`Server listening on port... ${port}`);
-});
+module.exports = router;

@@ -7,14 +7,6 @@
     {
       "source": "/img-compare/:match(.*)",
       "destination": "https://image-compare-automation-server.vercel.app:match(.*)"
-    },
-    {
-      "source": "/node-api/:match(.*)",
-      "destination": "https://node-api-drab.vercel.app:match(.*)"
-    },
-    {
-      "source": "/node-api/joblist:match(.*)",
-      "destination": "https://node-api-drab.vercel.app/api/joblist"
     }
   ]
 }
