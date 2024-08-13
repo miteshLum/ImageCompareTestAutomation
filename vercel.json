@@ -10,7 +10,7 @@
     },
     {
       "source": "/node-api/:match(.*)",
-      "destination": ""
+      "destination": "https://node-api-drab.vercel.app:match(.*)"
     }
   ]
 }
