@@ -11,6 +11,10 @@
     {
       "source": "/node-api/:match(.*)",
       "destination": "https://node-api-drab.vercel.app:match(.*)"
+    },
+    {
+      "source": "/node-api/joblist",
+      "destination": "https://node-api-drab.vercel.app/api/joblist"
     }
   ]
 }
