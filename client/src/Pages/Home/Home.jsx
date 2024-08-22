@@ -35,7 +35,7 @@ function Home() {
       setModuleList([]);
       setShowDownload(false);
     }
-  }, []);
+  }, [allModules, link]);
 
   const onLink = (e) => {
     let netlifyLink = e.target.value.split(".netlify.app");

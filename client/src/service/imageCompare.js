@@ -11,7 +11,7 @@ export async function getAllModules(link) {
       {
         link: link,
       },
-      { headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*", "Cache-Control": "no-cache", "Content-Type": "application/x-www-form-urlencoded" } }
+      { headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*", "Cache-Control": "no-cache" } }
     )
     .then(async (response) => {
       const allModules = response.data;
@@ -53,7 +53,7 @@ export async function readAllScenario(uid, link) {
         link: link,
         uid: uid,
       },
-      { headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*", "Cache-Control": "no-cache", "Content-Type": "application/x-www-form-urlencoded" } }
+      { headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*", "Cache-Control": "no-cache" } }
     )
     .then(function (response) {
       return response.data;
